@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Legacy Barber Club — Cortes que fazem presença</title>
+<meta name="description" content="Legacy Barber Club. Barbearia premium. Ambiente climatizado, café gratuito, cerveja artesanal e produtos premium. Agende seu horário.">
+
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Work+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          gold: {
+            DEFAULT: '#C9A227',
+            light: '#E8C468',
+            dim: '#8A7220',
+          },
+          coal: '#0B0B0C',
+          slate2: '#161618',
+          slate3: '#1F1F22',
+          bone: '#F3EFE4',
+        },
+        fontFamily: {
+          display: ['"Bebas Neue"', 'sans-serif'],
+          sans: ['"Work Sans"', 'sans-serif'],
+        },
+      }
+    }
+  }
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Work Sans', sans-serif; background: #0B0B0C; }
+  .font-display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; }
+
+  /* film grain overlay */
+  .grain {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 40;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.9s cubic-bezier(.2,.7,.3,1), transform 0.9s cubic-bezier(.2,.7,.3,1);
+  }
+  .reveal.is-visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.08s; }
+  .reveal-delay-2 { transition-delay: 0.16s; }
+  .reveal-delay-3 { transition-delay: 0.24s; }
+  .reveal-delay-4 { transition-delay: 0.32s; }
+  @media (prefers-reduced-motion: reduce) {
+    .reveal { opacity: 1; transform: none; transition: none; }
+  }
+
+  .gold-line { background: linear-gradient(90deg, transparent, #C9A227, transparent); }
+
+  .btn-gold {
+    position: relative;
+    overflow: hidden;
+  }
+  .btn-gold::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(120deg, transparent 30%, rgba(255,255,255,0.35) 50%, transparent 70%);
+    transform: translateX(-120%);
+    transition: transform 0.7s ease;
+  }
+  .btn-gold:hover::before { transform: translateX(120%); }
+
+  .service-card { transition: transform 0.45s cubic-bezier(.2,.7,.3,1), border-color 0.45s ease, background-color 0.45s ease; }
+  .service-card:hover { transform: translateY(-6px); border-color: #C9A227; background-color: #1F1F22; }
+
+  .team-card img { transition: transform 0.6s cubic-bezier(.2,.7,.3,1), filter 0.6s ease; filter: grayscale(0.55); }
+  .team-card:hover img { transform: scale(1.06); filter: grayscale(0); }
+
+  .gallery-item img { transition: transform 0.7s cubic-bezier(.2,.7,.3,1); }
+  .gallery-item:hover img { transform: scale(1.08); }
+
+  .num-roman { font-family: 'Bebas Neue', sans-serif; }
+
+  details > summary { list-style: none; cursor: pointer; }
+  details > summary::-webkit-details-marker { display: none; }
+</style>
+</head>
+<body class="bg-coal text-bone antialiased">
+<div class="grain"></div>
+
+<!-- ============ HEADER ============ -->
+<header class="fixed top-0 inset-x-0 z-50 bg-coal/85 backdrop-blur-md border-b border-white/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
+    <a href="#top" class="flex items-center gap-3">
+      <span class="w-10 h-10 rounded-full border border-gold flex items-center justify-center">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.6"><path d="M6 4l6 6-6 6M18 4l-6 6 6 6" stroke-linecap="round"/></svg>
+      </span>
+      <span class="font-display text-2xl tracking-wide">LEGACY <span class="text-gold">BARBER</span> CLUB</span>
+    </a>
+    <nav class="hidden lg:flex items-center gap-9 text-sm font-medium text-bone/70 uppercase tracking-wider">
+      <a href="#servicos" class="hover:text-gold transition-colors">Serviços</a>
+      <a href="#galeria" class="hover:text-gold transition-colors">Galeria</a>
+      <a href="#diferenciais" class="hover:text-gold transition-colors">Diferenciais</a>
+      <a href="#equipe" class="hover:text-gold transition-colors">Equipe</a>
+      <a href="#depoimentos" class="hover:text-gold transition-colors">Depoimentos</a>
+    </nav>
+    <a href=""
+       target="_blank" rel="noopener"
+       class="btn-gold hidden lg:inline-flex items-center gap-2 bg-gold hover:bg-gold-light text-coal text-sm font-bold uppercase tracking-wider px-6 py-3 rounded-sm transition-colors">
+      Agendar Horário
+    </a>
+    <button id="menuBtn" class="lg:hidden w-10 h-10 flex items-center justify-center border border-white/15 rounded-sm" aria-label="Abrir menu">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F3EFE4" stroke-width="2"><path d="M4 6h16M4 12h16M4 18h16"/></svg>
+    </button>
+  </div>
+  <div id="mobileMenu" class="hidden lg:hidden bg-coal border-t border-white/5 px-6 py-5 space-y-4 text-sm font-medium text-bone/80 uppercase tracking-wider">
+    <a href="#servicos" class="block">Serviços</a>
+    <a href="#galeria" class="block">Galeria</a>
+    <a href="#diferenciais" class="block">Diferenciais</a>
+    <a href="#equipe" class="block">Equipe</a>
+    <a href="#depoimentos" class="block">Depoimentos</a>
+    <a href="" target="_blank" rel="noopener"
+       class="block text-center bg-gold text-coal font-bold px-5 py-3 rounded-sm">Agendar Horário</a>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section id="top" class="relative h-screen min-h-[640px] flex items-end overflow-hidden">
+  <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?q=80&w=1800&auto=format&fit=crop"
+       alt="Barbeiro finalizando corte masculino em barbearia premium"
+       class="absolute inset-0 w-full h-full object-cover object-top">
+  <div class="absolute inset-0 bg-gradient-to-t from-coal via-coal/70 to-coal/20"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-coal/60 via-transparent to-transparent"></div>
+
+  <div class="relative max-w-7xl mx-auto px-6 lg:px-10 pb-20 lg:pb-28 w-full">
+    <div class="reveal is-visible max-w-2xl">
+      <div class="flex items-center gap-3 mb-6">
+        <span class="h-px w-10 bg-gold"></span>
+        <span class="text-gold text-xs font-semibold uppercase tracking-[0.25em]">Barbearia Premium</span>
+      </div>
+      <h1 class="font-display text-6xl sm:text-7xl lg:text-8xl leading-[0.92] text-bone">
+        Cortes que<br>fazem <span class="text-gold">presença.</span>
+      </h1>
+      <p class="mt-7 text-bone/70 text-lg max-w-md leading-relaxed">
+        Técnica, estilo e ambiente à altura de quem não abre mão de causar impacto.
+      </p>
+      <a href=""
+         target="_blank" rel="noopener"
+         class="btn-gold mt-10 inline-flex items-center gap-3 bg-gold hover:bg-gold-light text-coal font-bold uppercase tracking-wider px-8 py-4 rounded-sm transition-all hover:-translate-y-0.5">
+        Agendar Horário
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="absolute bottom-8 right-8 lg:right-10 hidden sm:flex items-center gap-3 text-bone/50 text-xs uppercase tracking-widest">
+    <span>Role para conhecer</span>
+    <span class="w-8 h-px bg-bone/30"></span>
+  </div>
+</section>
+
+<!-- ============ SERVIÇOS ============ -->
+<section id="servicos" class="py-24 lg:py-32 bg-slate2">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal flex items-end justify-between flex-wrap gap-6 mb-16">
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="h-px w-10 bg-gold"></span>
+          <span class="text-gold text-xs font-semibold uppercase tracking-[0.25em]">Serviços</span>
+        </div>
+        <h2 class="font-display text-4xl sm:text-5xl">O que fazemos por você</h2>
+      </div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div class="reveal reveal-delay-1 service-card border border-white/10 rounded-sm p-8">
+        <span class="num-roman text-gold text-sm tracking-widest">I</span>
+        <h3 class="font-display text-2xl mt-4">Corte Masculino</h3>
+        <p class="mt-3 text-sm text-bone/60 leading-relaxed">Cortes clássicos e modernos, com acabamento na navalha e finalização impecável.</p>
+      </div>
+
+      <div class="reveal reveal-delay-2 service-card border border-white/10 rounded-sm p-8">
+        <span class="num-roman text-gold text-sm tracking-widest">II</span>
+        <h3 class="font-display text-2xl mt-4">Barba</h3>
+        <p class="mt-3 text-sm text-bone/60 leading-relaxed">Modelagem completa com toalha quente, óleos e produtos premium para barba.</p>
+      </div>
+
+      <div class="reveal reveal-delay-3 service-card border border-gold/40 rounded-sm p-8 bg-slate3 relative">
+        <span class="absolute -top-3 right-6 bg-gold text-coal text-[10px] font-bold uppercase tracking-widest px-3 py-1 rounded-sm">Mais pedido</span>
+        <span class="num-roman text-gold text-sm tracking-widest">III</span>
+        <h3 class="font-display text-2xl mt-4">Corte + Barba</h3>
+        <p class="mt-3 text-sm text-bone/60 leading-relaxed">O combo completo para um visual alinhado da cabeça ao queixo, em uma única sessão.</p>
+      </div>
+
+      <div class="reveal reveal-delay-4 service-card border border-white/10 rounded-sm p-8">
+        <span class="num-roman text-gold text-sm tracking-widest">IV</span>
+        <h3 class="font-display text-2xl mt-4">Sobrancelha</h3>
+        <p class="mt-3 text-sm text-bone/60 leading-relaxed">Design de sobrancelha na navalha ou pinça, respeitando o formato natural do rosto.</p>
+      </div>
+
+      <div class="reveal reveal-delay-1 service-card border border-white/10 rounded-sm p-8">
+        <span class="num-roman text-gold text-sm tracking-widest">V</span>
+        <h3 class="font-display text-2xl mt-4">Pigmentação</h3>
+        <p class="mt-3 text-sm text-bone/60 leading-relaxed">Disfarce de falhas e preenchimento de barba com pigmentação natural e duradoura.</p>
+      </div>
+
+      <div class="reveal reveal-delay-2 service-card border border-white/10 rounded-sm p-8 flex flex-col justify-center bg-slate3">
+        <h3 class="font-display text-2xl">Não sabe o que escolher?</h3>
+        <p class="mt-3 text-sm text-bone/60 leading-relaxed">Fale com nossa equipe e monte o pacote ideal para o seu estilo.</p>
+        <a href="https://wa.me/5511988887777?text=Ol%C3%A1!%20Quero%20saber%20mais%20sobre%20os%20servi%C3%A7os."
+           target="_blank" rel="noopener"
+           class="mt-6 inline-flex w-fit items-center gap-2 text-gold text-sm font-semibold uppercase tracking-wider border-b border-gold pb-1 hover:text-gold-light hover:border-gold-light transition-colors">
+          Falar no WhatsApp
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALERIA ============ -->
+<section id="galeria" class="py-24 lg:py-32">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal mb-16">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="h-px w-10 bg-gold"></span>
+        <span class="text-gold text-xs font-semibold uppercase tracking-[0.25em]">Galeria</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-5xl">Estilo que se vê de longe</h2>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 auto-rows-[180px] lg:auto-rows-[220px]">
+      <div class="reveal reveal-delay-1 gallery-item overflow-hidden rounded-sm row-span-2 col-span-1">
+        <img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?q=80&w=800&auto=format&fit=crop" alt="Corte moderno degradê" class="w-full h-full object-cover">
+      </div>
+      <div class="reveal reveal-delay-2 gallery-item overflow-hidden rounded-sm">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=800&auto=format&fit=crop" alt="Barba alinhada" class="w-full h-full object-cover">
+      </div>
+      <div class="reveal reveal-delay-3 gallery-item overflow-hidden rounded-sm">
+        <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?q=80&w=800&auto=format&fit=crop" alt="Corte clássico com risco lateral" class="w-full h-full object-cover">
+      </div>
+      <div class="reveal reveal-delay-4 gallery-item overflow-hidden rounded-sm row-span-2 col-span-1">
+        <img src="https://images.unsplash.com/photo-1585747860715-2ba37e788b70?q=80&w=800&auto=format&fit=crop" alt="Acabamento na navalha" class="w-full h-full object-cover">
+      </div>
+      <div class="reveal reveal-delay-1 gallery-item overflow-hidden rounded-sm col-span-2 lg:col-span-1">
+        <img src="https://images.unsplash.com/photo-1516975080664-ed2fc6a32937?q=80&w=800&auto=format&fit=crop" alt="Interior da barbearia" class="w-full h-full object-cover">
+      </div>
+      <div class="reveal reveal-delay-2 gallery-item overflow-hidden rounded-sm">
+        <img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?auto=format&fit=crop&w=800&q=80" alt="Corte texturizado moderno" class="w-full h-full object-cover">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DIFERENCIAIS ============ -->
+<section id="diferenciais" class="py-24 lg:py-32 bg-slate2 relative overflow-hidden">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 relative">
+    <div class="reveal mb-16 max-w-2xl">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="h-px w-10 bg-gold"></span>
+        <span class="text-gold text-xs font-semibold uppercase tracking-[0.25em]">Diferenciais</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-5xl">A experiência completa</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-px bg-white/10">
+      <div class="reveal reveal-delay-1 bg-slate2 p-9 hover:bg-slate3 transition-colors">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.5" class="mb-6"><path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M3 12h2M19 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4"/><circle cx="12" cy="12" r="4"/></svg>
+        <h3 class="font-display text-xl">Ambiente Climatizado</h3>
+        <p class="mt-2 text-sm text-bone/60">Conforto do início ao fim do seu atendimento, em qualquer estação.</p>
+      </div>
+      <div class="reveal reveal-delay-2 bg-slate2 p-9 hover:bg-slate3 transition-colors">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.5" class="mb-6"><path d="M4 8h13a3 3 0 0 1 0 6h-1"/><path d="M4 8v6a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V8"/><path d="M8 2v2M11 2v2"/></svg>
+        <h3 class="font-display text-xl">Café Gratuito</h3>
+        <p class="mt-2 text-sm text-bone/60">Um bom café enquanto você espera ou aprecia o resultado do seu corte.</p>
+      </div>
+      <div class="reveal reveal-delay-3 bg-slate2 p-9 hover:bg-slate3 transition-colors">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.5" class="mb-6"><path d="M6 3h9l-1 6H7L6 3z"/><path d="M6 9v9a3 3 0 0 0 3 3h3a3 3 0 0 0 3-3V9"/><path d="M6 14h9"/></svg>
+        <h3 class="font-display text-xl">Cerveja Artesanal</h3>
+        <p class="mt-2 text-sm text-bone/60">Uma cortesia gelada para brindar ao novo visual, no final de semana.</p>
+      </div>
+      <div class="reveal reveal-delay-4 bg-slate2 p-9 hover:bg-slate3 transition-colors">
+        <svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="#C9A227" stroke-width="1.5" class="mb-6"><path d="M12 2l3 6 6 1-4.5 4.5L18 20l-6-3-6 3 1.5-6.5L3 9l6-1 3-6z"/></svg>
+        <h3 class="font-display text-xl">Produtos Premium</h3>
+        <p class="mt-2 text-sm text-bone/60">Linhas selecionadas de cuidado capilar e de barba, das melhores marcas.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ EQUIPE ============ -->
+<section id="equipe" class="py-24 lg:py-32">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal mb-16 max-w-2xl">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="h-px w-10 bg-gold"></span>
+        <span class="text-gold text-xs font-semibold uppercase tracking-[0.25em]">Equipe</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-5xl">Quem cuida do seu estilo</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-6">
+      <div class="reveal reveal-delay-1 team-card group">
+        <div class="overflow-hidden rounded-sm">
+          <img src="https://images.unsplash.com/photo-1622296089863-eb7fc530daa8?q=80&w=700&auto=format&fit=crop" alt="Barbeiro Diego Martins" class="w-full h-96 object-cover">
+        </div>
+        <div class="mt-5 flex items-center justify-between">
+          <div>
+            <h3 class="font-display text-2xl">Diego Martins</h3>
+            <p class="text-gold text-xs uppercase tracking-widest mt-1">Master Barber</p>
+          </div>
+          <span class="text-bone/40 text-sm">12 anos</span>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-2 team-card group">
+        <div class="overflow-hidden rounded-sm">
+          <img src="https://images.unsplash.com/photo-1618077360395-f3068be8e001?q=80&w=700&auto=format&fit=crop" alt="Barbeiro Rafael Costa" class="w-full h-96 object-cover">
+        </div>
+        <div class="mt-5 flex items-center justify-between">
+          <div>
+            <h3 class="font-display text-2xl">Rafael Costa</h3>
+            <p class="text-gold text-xs uppercase tracking-widest mt-1">Especialista em Barba</p>
+          </div>
+          <span class="text-bone/40 text-sm">8 anos</span>
+        </div>
+      </div>
+
+      <div class="reveal reveal-delay-3 team-card group">
+        <div class="overflow-hidden rounded-sm">
+          <img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?q=80&w=700&auto=format&fit=crop" alt="Barbeiro Thiago Nunes" class="w-full h-96 object-cover">
+        </div>
+        <div class="mt-5 flex items-center justify-between">
+          <div>
+            <h3 class="font-display text-2xl">Thiago Nunes</h3>
+            <p class="text-gold text-xs uppercase tracking-widest mt-1">Especialista em Cortes</p>
+          </div>
+          <span class="text-bone/40 text-sm">6 anos</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ DEPOIMENTOS ============ -->
+<section id="depoimentos" class="py-24 lg:py-32 bg-slate2">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10">
+    <div class="reveal mb-16 max-w-2xl">
+      <div class="flex items-center gap-3 mb-4">
+        <span class="h-px w-10 bg-gold"></span>
+        <span class="text-gold text-xs font-semibold uppercase tracking-[0.25em]">Depoimentos</span>
+      </div>
+      <h2 class="font-display text-4xl sm:text-5xl">Quem já passou por aqui</h2>
+    </div>
+
+    <div class="grid md:grid-cols-3 gap-6">
+      <div class="reveal reveal-delay-1 border border-white/10 rounded-sm p-8 hover:border-gold/40 transition-colors">
+        <div class="text-gold mb-4 tracking-widest">★★★★★</div>
+        <p class="text-bone/70 leading-relaxed">"Ambiente impecável e o corte ficou exatamente como eu queria. Virei cliente fixo."</p>
+        <p class="mt-6 font-semibold text-bone text-sm">Lucas Prado</p>
+        <p class="text-xs text-bone/40">Cliente há 2 anos</p>
+      </div>
+      <div class="reveal reveal-delay-2 border border-white/10 rounded-sm p-8 hover:border-gold/40 transition-colors">
+        <div class="text-gold mb-4 tracking-widest">★★★★★</div>
+        <p class="text-bone/70 leading-relaxed">"O combo de corte e barba é sensacional. Saio de lá sempre com aquela sensação de dever cumprido."</p>
+        <p class="mt-6 font-semibold text-bone text-sm">André Ribeiro</p>
+        <p class="text-xs text-bone/40">Cliente mensal</p>
+      </div>
+      <div class="reveal reveal-delay-3 border border-white/10 rounded-sm p-8 hover:border-gold/40 transition-colors">
+        <div class="text-gold mb-4 tracking-widest">★★★★★</div>
+        <p class="text-bone/70 leading-relaxed">"Atendimento de outro nível. Café, cerveja e um corte impecável — vale cada minuto de espera."</p>
+        <p class="mt-6 font-semibold text-bone text-sm">Felipe Andrade</p>
+        <p class="text-xs text-bone/40">Cliente há 1 ano</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ CTA FINAL ============ -->
+<section class="relative py-28 lg:py-36 overflow-hidden">
+  <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?q=80&w=1800&auto=format&fit=crop"
+       alt="Detalhe de barba finalizada" class="absolute inset-0 w-full h-full object-cover">
+  <div class="absolute inset-0 bg-coal/85"></div>
+  <div class="relative max-w-4xl mx-auto px-6 lg:px-10 text-center">
+    <div class="reveal">
+      <h2 class="font-display text-4xl sm:text-6xl leading-tight">
+        Sua imagem é o seu <span class="text-gold">cartão de visita.</span>
+      </h2>
+      <p class="mt-6 text-bone/70 max-w-xl mx-auto">
+        Reserve seu horário no Legacy Barber Club e experimente um atendimento à altura da sua presença.
+      </p>
+      <a href=""
+         target="_blank" rel="noopener"
+         class="btn-gold mt-9 inline-flex items-center gap-3 bg-gold hover:bg-gold-light text-coal font-bold uppercase tracking-wider px-9 py-4 rounded-sm transition-all hover:-translate-y-0.5">
+        Agendar Horário
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-coal border-t border-white/5">
+  <div class="max-w-7xl mx-auto px-6 lg:px-10 py-16 grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+    <div>
+      <span class="font-display text-2xl">LEGACY <span class="text-gold">BARBER</span> CLUB</span>
+      <p class="mt-4 text-sm text-bone/50 leading-relaxed">Barbearia premium para homens que valorizam presença e estilo.</p>
+    </div>
+
+    <div>
+      <h4 class="text-bone font-semibold text-sm uppercase tracking-wider mb-4">Endereço</h4>
+      <p class="text-sm text-bone/50 leading-relaxed">Av. Governador Valadares, 512 — Centro<br>Divinópolis, MG — CEP 35500-000</p>
+    </div>
+
+    <div>
+      <h4 class="text-bone font-semibold text-sm uppercase tracking-wider mb-4">Contato</h4>
+      <p class="text-sm text-bone/50 leading-relaxed">
+        (37) 98888-7777<br>
+        <a href="mailto:contato@legacybarberclub.com" class="hover:text-gold transition-colors">contato@legacybarberclub.com</a>
+      </p>
+    </div>
+
+    <div>
+      <h4 class="text-bone font-semibold text-sm uppercase tracking-wider mb-4">Redes sociais</h4>
+      <div class="flex items-center gap-4">
+        <a href="https://instagram.com/legacybarberclub" target="_blank" rel="noopener" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center hover:border-gold hover:text-gold transition-colors">
+          <svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="17.2" cy="6.8" r="1"/></svg>
+        </a>
+        <a href="https://wa.me/5511988887777" target="_blank" rel="noopener" class="w-10 h-10 rounded-full border border-white/15 flex items-center justify-center hover:border-gold hover:text-gold transition-colors">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M17.4 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.3 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.6.2-1.2.2-1.3-.1-.2-.3-.2-.5-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.5 5.2L2 22l4.9-1.5c1.5.9 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.1.9.9-3-.2-.3C3.7 14 3.2 12.4 3.2 12 3.2 7.1 7.1 3.2 12 3.2S20.8 7.1 20.8 12 16.9 20.2 12 20.2z"/></svg>
+        </a>
+      </div>
+    </div>
+  </div>
+  <div class="border-t border-white/5 py-6 text-center text-xs text-bone/30">
+    © 2026 Legacy Barber Club. Todos os direitos reservados.
+  </div>
+</footer>
+
+<!-- WhatsApp floating button (mobile) -->
+<a href="" target="_blank" rel="noopener"
+   class="fixed bottom-6 right-6 z-50 w-14 h-14 rounded-full bg-gold shadow-lg flex items-center justify-center hover:bg-gold-light transition-colors lg:hidden"
+   aria-label="Agendar Horário">
+  <svg width="26" height="26" viewBox="0 0 24 24" fill="#0B0B0C"><path d="M17.4 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.6.1-.2.3-.7.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.5-2.3-1.5-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.4.1-.6.1-.1.3-.3.4-.5.1-.1.2-.3.3-.5.1-.2 0-.4 0-.5-.1-.1-.6-1.5-.8-2-.2-.5-.4-.5-.6-.5h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.3 0 1.4 1 2.7 1.1 2.9.1.2 2 3 4.8 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.6.2-1.2.2-1.3-.1-.2-.3-.2-.5-.3z"/><path d="M12 2C6.5 2 2 6.5 2 12c0 1.9.5 3.6 1.5 5.2L2 22l4.9-1.5c1.5.9 3.2 1.3 5.1 1.3 5.5 0 10-4.5 10-10S17.5 2 12 2zm0 18.2c-1.7 0-3.3-.5-4.7-1.3l-.3-.2-3.1.9.9-3-.2-.3C3.7 14 3.2 12.4 3.2 12 3.2 7.1 7.1 3.2 12 3.2S20.8 7.1 20.8 12 16.9 20.2 12 20.2z"/></svg>
+</a>
+
+<script>
+  const menuBtn = document.getElementById('menuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  menuBtn.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+  mobileMenu.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+  });
+
+  const revealEls = document.querySelectorAll('.reveal:not(.is-visible)');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>
